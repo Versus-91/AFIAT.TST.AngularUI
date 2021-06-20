@@ -1,0 +1,119 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #facilityInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="facilityInfo.id">{{ l('EditFacilityInfo') }}</span>
+                        <span *ngIf="!facilityInfo.id">{{ l('CreateNewFacilityInfo') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="DistrictNameEnglish">{{ l('District') }}</label>
+                        <select
+                            name="facilityInfo.districtId"
+                            [(ngModel)]="facilityInfo.districtId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectADistrict') }}</option>
+                            <option *ngFor="let item of allDistricts" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label for="FacilityTypeNameEnglish">{{ l('FacilityType') }}</label>
+                        <select
+                            name="facilityInfo.facilityTypeId"
+                            [(ngModel)]="facilityInfo.facilityTypeId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectAFacilityType') }}</option>
+                            <option *ngFor="let item of allFacilityTypes" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FacilityInfo_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #FacilityInfo_NameEnglish="ngModel"
+                            id="FacilityInfo_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="facilityInfo.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="200"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FacilityInfo_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FacilityInfo_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #FacilityInfo_NameDari="ngModel"
+                            id="FacilityInfo_NameDari"
+                            class="form-control"
+                            [(ngModel)]="facilityInfo.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="200"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FacilityInfo_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FacilityInfo_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #FacilityInfo_NamePashto="ngModel"
+                            id="FacilityInfo_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="facilityInfo.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="200"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FacilityInfo_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!facilityInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

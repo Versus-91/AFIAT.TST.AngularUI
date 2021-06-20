@@ -1,0 +1,80 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CourseCode') }} :</h6>
+                        {{ item.course.courseCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('NameEnglish') }} :</h6>
+                        {{ item.course.nameEnglish }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('NameDari') }} :</h6>
+                        {{ item.course.nameDari }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('NamePashto') }} :</h6>
+                        {{ item.course.namePashto }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SubCategoryCode') }} :</h6>
+                        {{ item.course.subCategoryCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SubCategoryEnglish') }} :</h6>
+                        {{ item.course.subCategoryEnglish }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SubCategoryDari') }} :</h6>
+                        {{ item.course.subCategoryDari }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SubCategoryPashto') }} :</h6>
+                        {{ item.course.subCategoryPashto }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CategoryCode') }} :</h6>
+                        {{ item.course.categoryCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CategoryEnglish') }} :</h6>
+                        {{ item.course.categoryEnglish }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CategoryDari') }} :</h6>
+                        {{ item.course.categoryDari }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CategoryPashto') }} :</h6>
+                        {{ item.course.categoryPashto }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-outline-info" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

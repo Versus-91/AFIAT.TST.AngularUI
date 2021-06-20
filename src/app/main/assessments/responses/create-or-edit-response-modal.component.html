@@ -1,0 +1,89 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #responseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="response.id">{{ l('EditResponse') }}</span>
+                        <span *ngIf="!response.id">{{ l('CreateNewResponse') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Response_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #Response_NameEnglish="ngModel"
+                            id="Response_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="response.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Response_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Response_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #Response_NameDari="ngModel"
+                            id="Response_NameDari"
+                            class="form-control"
+                            [(ngModel)]="response.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Response_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Response_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #Response_NamePashto="ngModel"
+                            id="Response_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="response.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Response_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!responseForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

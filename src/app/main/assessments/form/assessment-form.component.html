@@ -1,0 +1,85 @@
+<div [@routerTransition]>
+    <ng-container *ngIf="!!assessment">
+        <div class="content d-flex flex-column flex-column-fluid" *ngIf="!submitted; else recommendation">
+            <div class="container" [class]="containerClass">
+                <div class="card card-custom gutter-b" style="height: 150px">
+                    <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
+                        <div class="mr-2">
+                            <h3 class="font-weight-bolder">
+                                {{
+                                    assessment?.facilityInfoName +
+                                        '(' +
+                                        assessment?.facilityTypeName +
+                                        ')' +
+                                        ' ' +
+                                        assessment?.implementerFullName
+                                }}
+                            </h3>
+                            <div class="text-dark-50 font-size-lg mt-2"></div>
+
+                            {{
+                                l('AssessorNames') +
+                                    ': ' +
+                                    assessment?.assessmentInfo?.assessorNames +
+                                    '  ' +
+                                    l('AssessmentShortName') +
+                                    ' : ' +
+                                    assessment?.assessmentInfo?.nameShort
+                            }}
+                        </div>
+                        <a class="btn btn-outline-success font-weight-bold py-3 px-6">
+                            <i class="flaticon-calendar"></i>
+                            {{ assessment?.assessmentInfo?.assessmentDate | date: 'shortDate' }}
+                        </a>
+                    </div>
+                </div>
+                <div class="card card-custom card-border" *ngIf="formContent">
+                    <form>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <!-- <h3 class="display-4">Area Name : {{ item?.area?.name }}</h3> -->
+                                </div>
+                            </div>
+                            <app-multi-step-form
+                                class="multi-step-form"
+                                [saving]="saving"
+                                [criterias]="serverCriterias"
+                                [formContent]="formContent"
+                                [items]="responses"
+                                [assessmentId]="assessment?.assessmentInfo?.id"
+                                (formSubmit)="onFormSubmit($event)"
+                            ></app-multi-step-form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <ng-template #recommendation>
+            <div class="container my-4">
+                <p-accordion [multiple]="true">
+                    <p-accordionTab *ngFor="let item of findings" [selected]="item?.criteria?.changePoints?.length > 0">
+                        <ng-template pTemplate="header" class="bg-success">
+                            {{ item?.criteria?.name }}
+                            <span class="badge mx-2" [class]="criteriaBadgeColor(item.responseNameEnglish)">{{
+                                item.responseNameEnglish
+                            }}</span>
+                        </ng-template>
+                        <div *ngIf="item?.criteria?.changePoints?.length > 0">
+                            <button
+                                class="btn btn-outline-primary"
+                                *ngFor="let item of item?.criteria?.changePoints"
+                                value="{{ item?.id }}"
+                            >
+                                {{ item?.name }}
+                            </button>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+                <a [routerLink]="['/app/main/assessments/assessmentsInfo']" class="btn btn-primary font-weight-bold">
+                    {{ l('Continue') }}
+                </a>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

@@ -1,0 +1,163 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #assessmentInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="assessmentInfo.id">{{ l('EditAssessmentInfo') }}</span>
+                        <span *ngIf="!assessmentInfo.id">{{ l('CreateNewAssessmentInfo') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="AssessmentInfo_AssessmentDate">{{ l('AssessmentDate') }}</label>
+                        <input
+                            required
+                            class="form-control m-input"
+                            #AssessmentInfo_AssessmentDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="assessmentInfo.assessmentDate"
+                            id="AssessmentInfo_AssessmentDate"
+                            name="AssessmentInfo_AssessmentDate"
+                        />
+                        <validation-messages [formCtrl]="AssessmentInfo_AssessmentDate"></validation-messages>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label for="FacilityInfoNameEnglish">{{ l('FacilityInfo') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="FacilityInfoNameEnglish"
+                                name="facilityInfoNameEnglish"
+                                [(ngModel)]="facilityInfoNameEnglish"
+                                type="text"
+                                disabled
+                            />
+                            <div class="input-group-append">
+                                <button
+                                    class="btn btn-outline-info"
+                                    (click)="openSelectFacilityInfoModal()"
+                                    type="button"
+                                >
+                                    <i class="fa fa-search"></i> {{ l('Pick') }}
+                                </button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setFacilityInfoIdNull()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="assessmentInfo.facilityInfoId"
+                        [(ngModel)]="assessmentInfo.facilityInfoId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="FacilityTypeNameEnglish">{{ l('FacilityType') }}</label>
+                                <select
+                                    name="assessmentInfo.facilityTypeId"
+                                    [(ngModel)]="assessmentInfo.facilityTypeId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectAFacilityType') }}</option>
+                                    <option *ngFor="let item of allFacilityTypes" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group m-form__group">
+                                    <label for="ImplementerFullName">{{ l('Implementer') }}</label>
+                                    <select
+                                        name="assessmentInfo.implementerId"
+                                        [(ngModel)]="assessmentInfo.implementerId"
+                                        class="form-control"
+                                        required
+                                    >
+                                        <option value="">{{ l('SelectAImplementer') }}</option>
+                                        <option *ngFor="let item of allImplementers" value="{{ item.id }}">
+                                            {{ item.displayName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="AssessmentInfo_AssessorNames">{{ l('AssessorNames') }} *</label>
+                        <input
+                            type="text"
+                            #AssessmentInfo_AssessorNames="ngModel"
+                            id="AssessmentInfo_AssessorNames"
+                            class="form-control"
+                            [(ngModel)]="assessmentInfo.assessorNames"
+                            name="AssessorNames"
+                            minlength="1"
+                            maxlength="300"
+                            required
+                        />
+                        <validation-messages [formCtrl]="AssessmentInfo_AssessorNames"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="AssessmentInfo_NameShort">{{ l('NameShort') }} *</label>
+                        <input
+                            type="text"
+                            #AssessmentInfo_NameShort="ngModel"
+                            id="AssessmentInfo_NameShort"
+                            class="form-control"
+                            [(ngModel)]="assessmentInfo.nameShort"
+                            name="NameShort"
+                            minlength="1"
+                            maxlength="8"
+                            required
+                        />
+                        <validation-messages [formCtrl]="AssessmentInfo_NameShort"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!assessmentInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <assessmentInfoFacilityInfoLookupTableModal
+        #assessmentInfoFacilityInfoLookupTableModal
+        (modalSave)="getNewFacilityInfoId()"
+    ></assessmentInfoFacilityInfoLookupTableModal>
+</div>

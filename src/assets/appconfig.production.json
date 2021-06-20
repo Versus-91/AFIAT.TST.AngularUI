@@ -1,0 +1,52 @@
+{
+  "remoteServiceBaseUrl": "http://146.71.79.161:5000",
+  "appBaseUrl": "http://146.71.79.161",
+  "localeMappings": {
+    "angular": [
+      {
+        "from": "pt-BR",
+        "to": "pt"
+      },
+      {
+        "from": "zh-CN",
+        "to": "zh"
+      },
+      {
+        "from": "he-IL",
+        "to": "he"
+      },
+      {
+        "from": "es-MX",
+        "to": "es"
+      },
+      {
+        "from": "vi",
+        "to": "en"
+      }
+    ],
+    "luxon": [
+      {
+        "from": "es-MX",
+        "to": "es"
+      },
+      {
+        "from": "zh-Hans",
+        "to": "zh-cn"
+      },
+      {
+        "from": "vi",
+        "to": "en-gb"
+      }
+    ],
+    "recaptcha": [
+      {
+        "from": "zh-Hans",
+        "to": "zh-cn"
+      },
+      {
+        "from": "es-MX",
+        "to": "es"
+      }
+    ]
+  }
+}

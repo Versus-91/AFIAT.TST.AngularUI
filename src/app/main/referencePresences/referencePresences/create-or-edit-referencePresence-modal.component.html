@@ -1,0 +1,134 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #referencePresenceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="referencePresence.id">{{ l('EditReferencePresence') }}</span>
+                        <span *ngIf="!referencePresence.id">{{ l('CreateNewReferencePresence') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-md-6 col-8">
+                                <label for="ReferenceNameEnglish">{{ l('Reference') }}</label>
+                                <select
+                                    name="referencePresence.referenceId"
+                                    [(ngModel)]="referencePresence.referenceId"
+                                    class="form-control form-control-solid"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectAReference') }}</option>
+                                    <option *ngFor="let item of allReferences" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-8">
+                                <label for="ReferencePresence_CheckDate">{{ l('CheckDate') }}</label>
+                                <input
+                                    required
+                                    class="form-control m-input"
+                                    #ReferencePresence_CheckDate
+                                    type="datetime"
+                                    bsDatepicker
+                                    datePickerLuxonModifier
+                                    [(date)]="referencePresence.checkDate"
+                                    id="ReferencePresence_CheckDate"
+                                    name="ReferencePresence_CheckDate"
+                                />
+                                <validation-messages [formCtrl]="ReferencePresence_CheckDate"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="m-checkbox-list">
+                                <label
+                                    for="ReferencePresence_IsPresent"
+                                    class="kt-checkbox checkbox checkbox-outline checkbox-success"
+                                >
+                                    <input
+                                        id="ReferencePresence_IsPresent"
+                                        #ReferencePresence_IsPresent="ngModel"
+                                        type="checkbox"
+                                        name="IsPresent"
+                                        [(ngModel)]="referencePresence.isPresent"
+                                    />
+                                    {{ l('IsPresent') }}
+                                    <span class="mx-1"></span>
+                                </label>
+                                <validation-messages [formCtrl]="ReferencePresence_IsPresent"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="m-checkbox-list">
+                                <label
+                                    for="ReferencePresence_Supplied"
+                                    class="kt-checkbox checkbox checkbox-outline checkbox-success"
+                                >
+                                    <input
+                                        id="ReferencePresence_Supplied"
+                                        #ReferencePresence_Supplied="ngModel"
+                                        type="checkbox"
+                                        name="Supplied"
+                                        [(ngModel)]="referencePresence.supplied"
+                                    />
+                                    {{ l('Supplied') }}
+                                    <span class="mx-1"></span>
+                                </label>
+                                <validation-messages [formCtrl]="ReferencePresence_Supplied"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <label for="ReferencePresence_Comment">{{ l('Comment') }}</label>
+                        <textarea
+                            type="text"
+                            #ReferencePresence_Comment="ngModel"
+                            id="ReferencePresence_Comment"
+                            class="form-control"
+                            [(ngModel)]="referencePresence.comment"
+                            name="Comment"
+                            minlength="1"
+                            maxlength="500"
+                        ></textarea>
+                        <validation-messages [formCtrl]="ReferencePresence_Comment"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!referencePresenceForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

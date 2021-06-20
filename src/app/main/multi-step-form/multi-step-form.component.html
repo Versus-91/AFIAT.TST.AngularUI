@@ -1,0 +1,173 @@
+<div class="mt-4">
+    <h3>{{ stepItems[activeStepIndex]?.area }}</h3>
+    <br />
+    <div class="my-3">
+        <progressbar [max]="masterForm.length" [value]="activeStepIndex + 1" [animate]="true">
+            <span class="mt-2">{{ activeStepIndex + 1 + ' / ' + masterForm.length }}</span>
+        </progressbar>
+    </div>
+    <br />
+    <h3 class="display-6 my-2">
+        {{ stepItems[activeStepIndex].labelHelp }}
+        <i
+            *ngIf="!!stepItems[activeStepIndex]?.labelHelp"
+            [outsideClick]="true"
+            class="fas text-primary fa-lg fa-info-circle pulse pulse-success"
+            popover="{{ stepItems[activeStepIndex]?.labelHelp }}"
+        ></i>
+    </h3>
+    <br />
+    <h5 class="display-6 my-4 text-primary" *ngIf="stepItems[activeStepIndex]?.standard">
+        {{ stepItems[activeStepIndex]?.standard }}
+        <i
+            *ngIf="!!stepItems[activeStepIndex]?.standardHelp"
+            [outsideClick]="true"
+            class="fas text-primary fa-lg fa-info-circle pulse pulse-success"
+            popover="{{ stepItems[activeStepIndex]?.standardHelp }}"
+        ></i>
+    </h5>
+    <hr />
+    <ng-container *ngFor="let form of masterForm; let i = index; trackBy: trackByFn">
+        <form action="" [formGroup]="masterForm[i]" *ngIf="i === activeStepIndex || masterForm.length === 1">
+            <div
+                class="form-group row my-3 validate"
+                *ngFor="let field of formFields[i]; trackBy: trackByFn"
+                [ngSwitch]="currentFormContent[i][field].type"
+            >
+                <ng-container *ngSwitchCase="'textarea'">
+                    <div class="col-md-10 col-12 lead">
+                        <textarea
+                            class="form-control"
+                            [id]="field"
+                            [formControlName]="field"
+                            [placeholder]="l(currentFormContent[i][field].placeholder)"
+                        ></textarea>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'file'">
+                    <input type="file" (change)="onFileChange($event)" />
+                </ng-container>
+                <ng-container *ngSwitchCase="'radio'">
+                    <div class="col-md-10 col-12 lead my-4">{{ field }}</div>
+                    <div class="radio-inline">
+                        <label
+                            class="radio"
+                            *ngFor="let option of currentFormContent[i][field].options; trackBy: trackByFn"
+                        >
+                            <input [value]="option.code" [formControlName]="field" type="radio" [name]="field" />
+                            <span></span>
+                            {{ option.name }}
+                        </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'select'">
+                    <div class="col-md-10 col-12 lead">{{ field }}</div>
+                    <div class="col-md-2 col-8">
+                        <select
+                            class="form-control"
+                            [class]="selectClass(masterForm[i], field)"
+                            [formControlName]="field"
+                            [id]="field"
+                        >
+                            <option value="">Select your response</option>
+                            <option
+                                *ngFor="let option of currentFormContent[i][field].options; trackBy: trackByFn"
+                                [value]="option.code"
+                            >
+                                {{ option.name }}
+                            </option>
+                        </select>
+                        <div
+                            *ngIf="
+                                (masterForm[i].get(field).dirty || masterForm[i].get(field).touched) &&
+                                masterForm[i].get(field).invalid &&
+                                masterForm[i].get(field).errors
+                            "
+                            class="invalid-feedback"
+                        >
+                            {{ getValidationMessage(i, field) }}
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                    <input
+                        class="form-control mx-2 col-md-6"
+                        [type]="currentFormContent[i][field].type"
+                        [formControlName]="field"
+                        [id]="field"
+                        [placeholder]="currentFormContent[i][field].placeholder"
+                    />
+                </ng-container>
+
+                <!-- <p
+                    class="validation-error mx-3"
+                    *ngIf="
+                        (masterForm[i].get(field).dirty || masterForm[i].get(field).touched) &&
+                        masterForm[i].get(field).invalid &&
+                        masterForm[i].get(field).errors
+                    "
+                >
+                    {{ getValidationMessage(i, field) }}
+                </p> -->
+            </div>
+
+            <div class="preview-container" *ngIf="activeStepIndex === stepItems.length - 1">
+                <ul class="list-group my-3">
+                    <ng-container *ngFor="let field of masterFormFields; trackBy: trackByFn">
+                        <li class="list-group-item lead py-3" *ngIf="!!formData[field]">
+                            <span class="font-weight-bold mx-2">{{ field }} : </span>
+                            <span class="label label-info label-lg label-inline mr-2 mr-2">{{
+                                getFormTitle(formData[field])
+                            }}</span>
+                        </li>
+                    </ng-container>
+                </ul>
+                <br />
+            </div>
+            <div class="row">
+                <div class="col-4 col-md-1">
+                    <button
+                        class="btn btn-secondary font-weight-bold"
+                        [routerLink]="['/app/main/assessments/assessmentsInfo']"
+                    >
+                        {{ l('Cancel') }}
+                    </button>
+                </div>
+                <div class="col-4 col-md-1">
+                    <button
+                        class="btn btn-danger font-weight-bold"
+                        type="button"
+                        [disabled]="!activeStepIndex"
+                        (click)="goToStep('prev')"
+                    >
+                        {{ l('Previous') }}
+                    </button>
+                </div>
+                <div class="col-4 col-md-2">
+                    <button
+                        class="btn btn-info font-weight-bold"
+                        type="button"
+                        [disabled]="activeStepIndex === stepItems.length - 1 || masterForm[i].invalid"
+                        (click)="goToStep('next')"
+                        *ngIf="activeStepIndex !== stepItems.length - 1"
+                    >
+                        {{ l('Next') }}
+                    </button>
+                    <button
+                        class="btn btn-success font-weight-bold"
+                        *ngIf="activeStepIndex === stepItems.length - 1"
+                        type="button"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                        (click)="onFormSubmit()"
+                    >
+                        <i class="flaticon2-send-1"></i>
+                        {{ l('Save') }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</div>

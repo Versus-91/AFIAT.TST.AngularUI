@@ -1,0 +1,131 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #wallChartPresenceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="wallChartPresence.id">{{ l('EditWallChartPresence') }}</span>
+                        <span *ngIf="!wallChartPresence.id">{{ l('CreateNewWallChartPresence') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="WellChartNameEnglish">{{ l('WellChart') }}</label>
+                        <select
+                            name="wallChartPresence.wellChartId"
+                            [(ngModel)]="wallChartPresence.wellChartId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectAWellChart') }}</option>
+                            <option *ngFor="let item of allWellCharts" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="WallChartPresence_CheckDate">{{ l('CheckDate') }}</label>
+                        <input
+                            required
+                            class="form-control m-input"
+                            #WallChartPresence_CheckDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="wallChartPresence.checkDate"
+                            id="WallChartPresence_CheckDate"
+                            name="WallChartPresence_CheckDate"
+                        />
+                        <validation-messages [formCtrl]="WallChartPresence_CheckDate"></validation-messages>
+                    </div>
+                    <br />
+                    <div class="m-checkbox-list">
+                        <label
+                            for="WallChartPresence_IsPresent"
+                            class="kt-checkbox checkbox checkbox-outline checkbox-success"
+                        >
+                            <input
+                                id="WallChartPresence_IsPresent"
+                                #WallChartPresence_IsPresent="ngModel"
+                                type="checkbox"
+                                name="IsPresent"
+                                [(ngModel)]="wallChartPresence.isPresent"
+                            />
+                            {{ l('IsPresent') }}
+                            <span class="mx-1"></span>
+                        </label>
+                        <validation-messages [formCtrl]="WallChartPresence_IsPresent"></validation-messages>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label for="WallChartPresence_Numerator">{{ l('Numerator') }}</label>
+                        <input
+                            type="number"
+                            #WallChartPresence_Numerator="ngModel"
+                            id="WallChartPresence_Numerator"
+                            class="form-control"
+                            [(ngModel)]="wallChartPresence.numerator"
+                            name="Numerator"
+                        />
+                        <validation-messages [formCtrl]="WallChartPresence_Numerator"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="WallChartPresence_Denominator">{{ l('Denominator') }}</label>
+                        <input
+                            type="number"
+                            #WallChartPresence_Denominator="ngModel"
+                            id="WallChartPresence_Denominator"
+                            class="form-control"
+                            [(ngModel)]="wallChartPresence.denominator"
+                            name="Denominator"
+                        />
+                        <validation-messages [formCtrl]="WallChartPresence_Denominator"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="WallChartPresence_Comment">{{ l('Comment') }}</label>
+                        <textarea
+                            type="text"
+                            #WallChartPresence_Comment="ngModel"
+                            id="WallChartPresence_Comment"
+                            class="form-control"
+                            [(ngModel)]="wallChartPresence.comment"
+                            name="Comment"
+                            minlength="1"
+                            maxlength="500"
+                        ></textarea>
+                        <validation-messages [formCtrl]="WallChartPresence_Comment"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!wallChartPresenceForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

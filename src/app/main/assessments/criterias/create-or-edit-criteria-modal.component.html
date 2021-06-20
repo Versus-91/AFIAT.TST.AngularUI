@@ -1,0 +1,119 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #criteriaForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="criteria.id">{{ l('EditCriteria') }}</span>
+                        <span *ngIf="!criteria.id">{{ l('CreateNewCriteria') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="StandardNameEnglish">{{ l('Standard') }}</label>
+                        <select
+                            name="criteria.standardId"
+                            [(ngModel)]="criteria.standardId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectAStandard') }}</option>
+                            <option *ngFor="let item of allStandards" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label for="FacilityTypeNameEnglish">{{ l('FacilityType') }}</label>
+                        <select
+                            name="criteria.facilityTypeId"
+                            [(ngModel)]="criteria.facilityTypeId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectAFacilityType') }}</option>
+                            <option *ngFor="let item of allFacilityTypes" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Criteria_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <textarea
+                            type="text"
+                            #Criteria_NameEnglish="ngModel"
+                            id="Criteria_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="criteria.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="400"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Criteria_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Criteria_NameDari">{{ l('NameDari') }} *</label>
+                        <textarea
+                            type="text"
+                            #Criteria_NameDari="ngModel"
+                            id="Criteria_NameDari"
+                            class="form-control"
+                            [(ngModel)]="criteria.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="400"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Criteria_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Criteria_NamePashto">{{ l('NamePashto') }} *</label>
+                        <textarea
+                            type="text"
+                            #Criteria_NamePashto="ngModel"
+                            id="Criteria_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="criteria.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="400"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Criteria_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!criteriaForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

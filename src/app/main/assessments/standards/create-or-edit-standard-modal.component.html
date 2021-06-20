@@ -1,0 +1,149 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #standardForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="standard.id">{{ l('EditStandard') }}</span>
+                        <span *ngIf="!standard.id">{{ l('CreateNewStandard') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="SectionNameEnglish">{{ l('Section') }}</label>
+                        <select
+                            name="standard.sectionId"
+                            [(ngModel)]="standard.sectionId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectASection') }}</option>
+                            <option *ngFor="let item of allSections" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Standard_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <textarea
+                            type="text"
+                            #Standard_NameEnglish="ngModel"
+                            id="Standard_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="standard.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Standard_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Standard_NameDari">{{ l('NameDari') }} *</label>
+                        <textarea
+                            type="text"
+                            #Standard_NameDari="ngModel"
+                            id="Standard_NameDari"
+                            class="form-control"
+                            [(ngModel)]="standard.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Standard_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Standard_NamePashto">{{ l('NamePashto') }} *</label>
+                        <textarea
+                            type="text"
+                            #Standard_NamePashto="ngModel"
+                            id="Standard_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="standard.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Standard_NamePashto"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Standard_TipEnglish">{{ l('TipEnglish') }}</label>
+                        <textarea
+                            type="text"
+                            #Standard_TipEnglish="ngModel"
+                            id="Standard_TipEnglish"
+                            class="form-control"
+                            [(ngModel)]="standard.tipEnglish"
+                            name="TipEnglish"
+                            minlength="1"
+                            maxlength="300"
+                        ></textarea>
+                        <validation-messages [formCtrl]="Standard_TipEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Standard_TipDari">{{ l('TipDari') }}</label>
+                        <textarea
+                            type="text"
+                            #Standard_TipDari="ngModel"
+                            id="Standard_TipDari"
+                            class="form-control"
+                            [(ngModel)]="standard.tipDari"
+                            name="TipDari"
+                            minlength="1"
+                            maxlength="300"
+                        ></textarea>
+                        <validation-messages [formCtrl]="Standard_TipDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Standard_TipPashto">{{ l('TipPashto') }}</label>
+                        <textarea
+                            type="text"
+                            #Standard_TipPashto="ngModel"
+                            id="Standard_TipPashto"
+                            class="form-control"
+                            [(ngModel)]="standard.tipPashto"
+                            name="TipPashto"
+                            minlength="1"
+                            maxlength="300"
+                        ></textarea>
+                        <validation-messages [formCtrl]="Standard_TipPashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!standardForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

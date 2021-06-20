@@ -1,0 +1,14 @@
+.was-validated .form-control:invalid, .form-control.is-invalid {
+   background-image: none !important;
+}
+.was-validated .form-control:valid, .form-control.is-valid {
+  background-image: none !important;
+
+}
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+}

@@ -1,0 +1,202 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #facilityStaffForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="facilityStaff.id">{{ l('EditFacilityStaff') }}</span>
+                        <span *ngIf="!facilityStaff.id">{{ l('CreateNewFacilityStaff') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="GenderNameEnglish">{{ l('Gender') }}</label>
+                                <select
+                                    name="facilityStaff.genderId"
+                                    [(ngModel)]="facilityStaff.genderId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectAGender') }}</option>
+                                    <option *ngFor="let item of allGenders" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group m-form__group">
+                                    <label for="PositionNameEnglish">{{ l('Position') }}</label>
+                                    <select
+                                        name="facilityStaff.positionId"
+                                        [(ngModel)]="facilityStaff.positionId"
+                                        class="form-control"
+                                        required
+                                    >
+                                        <option value="">{{ l('SelectAPosition') }}</option>
+                                        <option *ngFor="let item of allPositions" value="{{ item.id }}">
+                                            {{ item.displayName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="SpecialityNameEnglish">{{ l('Speciality') }}</label>
+                                <select
+                                    name="facilityStaff.specialityId"
+                                    [(ngModel)]="facilityStaff.specialityId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectASpeciality') }}</option>
+                                    <option *ngFor="let item of allSpecialitys" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group m-form__group">
+                                    <label for="FacilityTypeNameShort">{{ l('FacilityType') }}</label>
+                                    <select
+                                        name="facilityStaff.facilityTypeId"
+                                        [(ngModel)]="facilityStaff.facilityTypeId"
+                                        class="form-control"
+                                    >
+                                        <option value="">{{ l('SelectAFacilityType') }}</option>
+                                        <option *ngFor="let item of allFacilityTypes" value="{{ item.id }}">
+                                            {{ item.displayName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group">
+                        <label for="FacilityInfoNameEnglish">{{ l('FacilityInfo') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="FacilityInfoNameEnglish"
+                                name="facilityInfoNameEnglish"
+                                [(ngModel)]="facilityInfoNameEnglish"
+                                type="text"
+                                disabled
+                            />
+                            <div class="input-group-append">
+                                <button
+                                    class="btn btn-outline-info"
+                                    (click)="openSelectFacilityInfoModal()"
+                                    type="button"
+                                >
+                                    <i class="fa fa-search"></i> {{ l('Pick') }}
+                                </button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setFacilityInfoIdNull()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="facilityStaff.facilityInfoId"
+                        [(ngModel)]="facilityStaff.facilityInfoId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="form-group">
+                        <label for="FacilityStaff_HRID">{{ l('HRID') }} *</label>
+                        <input
+                            type="text"
+                            #FacilityStaff_HRID="ngModel"
+                            id="FacilityStaff_HRID"
+                            class="form-control"
+                            [(ngModel)]="facilityStaff.hrid"
+                            name="HRID"
+                            minlength="1"
+                            maxlength="20"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FacilityStaff_HRID"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="FacilityStaff_FirstName">{{ l('FirstName') }} *</label>
+                                <input
+                                    type="text"
+                                    #FacilityStaff_FirstName="ngModel"
+                                    id="FacilityStaff_FirstName"
+                                    class="form-control"
+                                    [(ngModel)]="facilityStaff.firstName"
+                                    name="FirstName"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="FacilityStaff_FirstName"></validation-messages>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="FacilityStaff_LastName">{{ l('LastName') }} *</label>
+                                    <input
+                                        type="text"
+                                        #FacilityStaff_LastName="ngModel"
+                                        id="FacilityStaff_LastName"
+                                        class="form-control"
+                                        [(ngModel)]="facilityStaff.lastName"
+                                        name="LastName"
+                                        minlength="1"
+                                        maxlength="50"
+                                        required
+                                    />
+                                    <validation-messages [formCtrl]="FacilityStaff_LastName"></validation-messages>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!facilityStaffForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <facilityStaffFacilityInfoLookupTableModal
+        #facilityStaffFacilityInfoLookupTableModal
+        (modalSave)="getNewFacilityInfoId()"
+    ></facilityStaffFacilityInfoLookupTableModal>
+</div>

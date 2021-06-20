@@ -1,0 +1,89 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #specialityForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="speciality.id">{{ l('EditSpeciality') }}</span>
+                        <span *ngIf="!speciality.id">{{ l('CreateNewSpeciality') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Speciality_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #Speciality_NameEnglish="ngModel"
+                            id="Speciality_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="speciality.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Speciality_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Speciality_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #Speciality_NameDari="ngModel"
+                            id="Speciality_NameDari"
+                            class="form-control"
+                            [(ngModel)]="speciality.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Speciality_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Speciality_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #Speciality_NamePashto="ngModel"
+                            id="Speciality_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="speciality.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Speciality_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!specialityForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

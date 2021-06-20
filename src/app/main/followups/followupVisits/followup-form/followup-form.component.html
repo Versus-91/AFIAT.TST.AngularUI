@@ -1,0 +1,44 @@
+<div class="container" *ngIf="!!followUp">
+    <div class="card card-custom gutter-b" style="height: 150px">
+        <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
+            <div class="mr-2">
+                <h3 class="font-weight-bolder">
+                    {{ followUp?.followupRoundNameEnglish + ' - ' + followUp?.implementerFullName }}
+                </h3>
+                <div class="text-dark-50 font-size-lg mt-2">
+                    {{
+                        l('AssessorNames') +
+                            ': ' +
+                            followUp?.followupVisit?.assessorNames +
+                            ' ' +
+                            l('AssessmentShortName') +
+                            ' : ' +
+                            followUp?.assessmentInfoNameShort
+                    }}
+                </div>
+            </div>
+            <a class="btn btn-outline-success font-weight-bold py-3 px-6">
+                <i class="flaticon-calendar"></i>
+                {{ followUp?.followupVisit?.followDate | date: 'shortDate' }}
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <tabset>
+                <tab heading="{{ l('CapacityBuilding') }}">
+                    <br />
+                    <app-capacitybuilding [followUpId]="id"></app-capacitybuilding>
+                </tab>
+                <tab heading="{{ l('ReferencePresence') }}">
+                    <br />
+                    <app-reference-presence [followUpId]="id"> </app-reference-presence
+                ></tab>
+                <tab heading="{{ l('WellChartPresence') }}">
+                    <br />
+                    <app-wallchart-presence [followUpId]="id"></app-wallchart-presence
+                ></tab>
+            </tabset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #districtForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="district.id">{{ l('EditDistrict') }}</span>
+                        <span *ngIf="!district.id">{{ l('CreateNewDistrict') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="ProvinceNameEnglish">{{ l('Province') }}</label>
+                        <select
+                            name="district.provinceId"
+                            [(ngModel)]="district.provinceId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectAProvince') }}</option>
+                            <option *ngFor="let item of allProvinces" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="District_DistrictCode">{{ l('DistrictCode') }} *</label>
+                        <input
+                            type="text"
+                            #District_DistrictCode="ngModel"
+                            id="District_DistrictCode"
+                            class="form-control"
+                            [(ngModel)]="district.districtCode"
+                            name="DistrictCode"
+                            minlength="1"
+                            maxlength="4"
+                            required
+                        />
+                        <validation-messages [formCtrl]="District_DistrictCode"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="District_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #District_NameEnglish="ngModel"
+                            id="District_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="district.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="50"
+                            required
+                        />
+                        <validation-messages [formCtrl]="District_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="District_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #District_NameDari="ngModel"
+                            id="District_NameDari"
+                            class="form-control"
+                            [(ngModel)]="district.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="50"
+                            required
+                        />
+                        <validation-messages [formCtrl]="District_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="District_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #District_NamePashto="ngModel"
+                            id="District_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="district.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="50"
+                            required
+                        />
+                        <validation-messages [formCtrl]="District_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!districtForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

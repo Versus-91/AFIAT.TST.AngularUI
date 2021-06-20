@@ -1,0 +1,104 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #changePointForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="changePoint.id">{{ l('EditChangePoint') }}</span>
+                        <span *ngIf="!changePoint.id">{{ l('CreateNewChangePoint') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="CriteriaNameEnglish">{{ l('Criteria') }}</label>
+                        <select
+                            name="changePoint.criteriaId"
+                            [(ngModel)]="changePoint.criteriaId"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">{{ l('SelectACriteria') }}</option>
+                            <option *ngFor="let item of allCriterias" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ChangePoint_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <textarea
+                            type="text"
+                            #ChangePoint_NameEnglish="ngModel"
+                            id="ChangePoint_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="changePoint.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="400"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="ChangePoint_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ChangePoint_NameDari">{{ l('NameDari') }} *</label>
+                        <textarea
+                            type="text"
+                            #ChangePoint_NameDari="ngModel"
+                            id="ChangePoint_NameDari"
+                            class="form-control"
+                            [(ngModel)]="changePoint.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="400"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="ChangePoint_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ChangePoint_NamePashto">{{ l('NamePashto') }} *</label>
+                        <textarea
+                            type="text"
+                            #ChangePoint_NamePashto="ngModel"
+                            id="ChangePoint_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="changePoint.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="400"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="ChangePoint_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!changePointForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

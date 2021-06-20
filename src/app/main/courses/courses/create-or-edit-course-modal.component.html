@@ -1,0 +1,258 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #courseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="course.id">{{ l('EditCourse') }}</span>
+                        <span *ngIf="!course.id">{{ l('CreateNewCourse') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_CourseCode">{{ l('CourseCode') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_CourseCode="ngModel"
+                                    id="Course_CourseCode"
+                                    class="form-control"
+                                    [(ngModel)]="course.courseCode"
+                                    name="CourseCode"
+                                    minlength="1"
+                                    maxlength="4"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_CourseCode"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_NameEnglish">{{ l('NameEnglish') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_NameEnglish="ngModel"
+                                    id="Course_NameEnglish"
+                                    class="form-control"
+                                    [(ngModel)]="course.nameEnglish"
+                                    name="NameEnglish"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_NameEnglish"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_NameDari">{{ l('NameDari') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_NameDari="ngModel"
+                                    id="Course_NameDari"
+                                    class="form-control"
+                                    [(ngModel)]="course.nameDari"
+                                    name="NameDari"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_NameDari"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_NamePashto">{{ l('NamePashto') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_NamePashto="ngModel"
+                                    id="Course_NamePashto"
+                                    class="form-control"
+                                    [(ngModel)]="course.namePashto"
+                                    name="NamePashto"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_NamePashto"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_SubCategoryCode">{{ l('SubCategoryCode') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_SubCategoryCode="ngModel"
+                                    id="Course_SubCategoryCode"
+                                    class="form-control"
+                                    [(ngModel)]="course.subCategoryCode"
+                                    name="SubCategoryCode"
+                                    minlength="1"
+                                    maxlength="3"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_SubCategoryCode"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_SubCategoryEnglish">{{ l('SubCategoryEnglish') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_SubCategoryEnglish="ngModel"
+                                    id="Course_SubCategoryEnglish"
+                                    class="form-control"
+                                    [(ngModel)]="course.subCategoryEnglish"
+                                    name="SubCategoryEnglish"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_SubCategoryEnglish"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_SubCategoryDari">{{ l('SubCategoryDari') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_SubCategoryDari="ngModel"
+                                    id="Course_SubCategoryDari"
+                                    class="form-control"
+                                    [(ngModel)]="course.subCategoryDari"
+                                    name="SubCategoryDari"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_SubCategoryDari"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_SubCategoryPashto">{{ l('SubCategoryPashto') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_SubCategoryPashto="ngModel"
+                                    id="Course_SubCategoryPashto"
+                                    class="form-control"
+                                    [(ngModel)]="course.subCategoryPashto"
+                                    name="SubCategoryPashto"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_SubCategoryPashto"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_CategoryCode">{{ l('CategoryCode') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_CategoryCode="ngModel"
+                                    id="Course_CategoryCode"
+                                    class="form-control"
+                                    [(ngModel)]="course.categoryCode"
+                                    name="CategoryCode"
+                                    minlength="1"
+                                    maxlength="3"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_CategoryCode"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_CategoryEnglish">{{ l('CategoryEnglish') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_CategoryEnglish="ngModel"
+                                    id="Course_CategoryEnglish"
+                                    class="form-control"
+                                    [(ngModel)]="course.categoryEnglish"
+                                    name="CategoryEnglish"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_CategoryEnglish"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_CategoryDari">{{ l('CategoryDari') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_CategoryDari="ngModel"
+                                    id="Course_CategoryDari"
+                                    class="form-control"
+                                    [(ngModel)]="course.categoryDari"
+                                    name="CategoryDari"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_CategoryDari"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="Course_CategoryPashto">{{ l('CategoryPashto') }} *</label>
+                                <input
+                                    type="text"
+                                    #Course_CategoryPashto="ngModel"
+                                    id="Course_CategoryPashto"
+                                    class="form-control"
+                                    [(ngModel)]="course.categoryPashto"
+                                    name="CategoryPashto"
+                                    minlength="1"
+                                    maxlength="50"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Course_CategoryPashto"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!courseForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

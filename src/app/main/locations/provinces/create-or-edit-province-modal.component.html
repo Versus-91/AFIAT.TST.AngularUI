@@ -1,0 +1,105 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #provinceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="province.id">{{ l('EditProvince') }}</span>
+                        <span *ngIf="!province.id">{{ l('CreateNewProvince') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Province_ProvinceCode">{{ l('ProvinceCode') }} *</label>
+                        <input
+                            type="text"
+                            #Province_ProvinceCode="ngModel"
+                            id="Province_ProvinceCode"
+                            class="form-control"
+                            [(ngModel)]="province.provinceCode"
+                            name="ProvinceCode"
+                            minlength="1"
+                            maxlength="2"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Province_ProvinceCode"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Province_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #Province_NameEnglish="ngModel"
+                            id="Province_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="province.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="50"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Province_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Province_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #Province_NameDari="ngModel"
+                            id="Province_NameDari"
+                            class="form-control"
+                            [(ngModel)]="province.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="50"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Province_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Province_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #Province_NamePashto="ngModel"
+                            id="Province_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="province.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="50"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Province_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!provinceForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #capacityBuildingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="capacityBuilding.id">{{ l('EditCapacityBuilding') }}</span>
+                        <span *ngIf="!capacityBuilding.id">{{ l('CreateNewCapacityBuilding') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="CourseNameEnglish">{{ l('Course') }}</label>
+                                <select
+                                    name="capacityBuilding.courseId"
+                                    [(ngModel)]="capacityBuilding.courseId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectACourse') }}</option>
+                                    <option *ngFor="let item of allCourses" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="CourseTypeNameEnglish">{{ l('CourseType') }}</label>
+                                <select
+                                    name="capacityBuilding.courseTypeId"
+                                    [(ngModel)]="capacityBuilding.courseTypeId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectACourseType') }}</option>
+                                    <option *ngFor="let item of allCourseTypes" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CapacityBuilding_Venue">{{ l('Venue') }} *</label>
+                        <input
+                            type="text"
+                            #CapacityBuilding_Venue="ngModel"
+                            id="CapacityBuilding_Venue"
+                            class="form-control"
+                            [(ngModel)]="capacityBuilding.venue"
+                            name="Venue"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="CapacityBuilding_Venue"></validation-messages>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6 col-10">
+                            <label for="CapacityBuilding_StartDate">{{ l('StartDate') }}</label>
+                            <input
+                                required
+                                class="form-control m-input"
+                                #CapacityBuilding_StartDate
+                                type="datetime"
+                                bsDatepicker
+                                datePickerLuxonModifier
+                                [(date)]="capacityBuilding.startDate"
+                                id="CapacityBuilding_StartDate"
+                                name="CapacityBuilding_StartDate"
+                            />
+                            <validation-messages [formCtrl]="CapacityBuilding_StartDate"></validation-messages>
+                        </div>
+                        <div class="col-md-6 col-10">
+                            <div class="form-group">
+                                <label for="CapacityBuilding_EndDate">{{ l('EndDate') }}</label>
+                                <input
+                                    required
+                                    class="form-control m-input"
+                                    #CapacityBuilding_EndDate
+                                    type="datetime"
+                                    bsDatepicker
+                                    datePickerLuxonModifier
+                                    [(date)]="capacityBuilding.endDate"
+                                    id="CapacityBuilding_EndDate"
+                                    name="CapacityBuilding_EndDate"
+                                />
+                                <validation-messages [formCtrl]="CapacityBuilding_EndDate"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="m-checkbox-list">
+                        <label for="CapacityBuilding_IsRefresher" class="checkbox checkbox-outline checkbox-success">
+                            <input
+                                id="CapacityBuilding_IsRefresher"
+                                #CapacityBuilding_IsRefresher="ngModel"
+                                type="checkbox"
+                                name="IsRefresher"
+                                [(ngModel)]="capacityBuilding.isRefresher"
+                            />
+                            {{ l('IsRefresher') }}
+                            <span class="mx-1"></span>
+                        </label>
+                        <validation-messages [formCtrl]="CapacityBuilding_IsRefresher"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!capacityBuildingForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <capacityBuildingFollowupVisitLookupTableModal
+        #capacityBuildingFollowupVisitLookupTableModal
+        (modalSave)="getNewFollowupVisitId()"
+    ></capacityBuildingFollowupVisitLookupTableModal>
+</div>

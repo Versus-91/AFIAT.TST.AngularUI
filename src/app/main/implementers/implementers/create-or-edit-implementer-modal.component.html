@@ -1,0 +1,108 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #implementerForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="implementer.id">{{ l('EditImplementer') }}</span>
+                        <span *ngIf="!implementer.id">{{ l('CreateNewImplementer') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Implementer_Acronym">{{ l('Acronym') }} *</label>
+                        <input
+                            type="text"
+                            #Implementer_Acronym="ngModel"
+                            id="Implementer_Acronym"
+                            class="form-control"
+                            [(ngModel)]="implementer.acronym"
+                            name="Acronym"
+                            minlength="1"
+                            maxlength="20"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Implementer_Acronym"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        .
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="Implementer_FullName">{{ l('FullName') }} *</label>
+                                <input
+                                    type="text"
+                                    #Implementer_FullName="ngModel"
+                                    id="Implementer_FullName"
+                                    class="form-control"
+                                    [(ngModel)]="implementer.fullName"
+                                    name="FullName"
+                                    minlength="1"
+                                    maxlength="200"
+                                    required
+                                />
+                                <validation-messages [formCtrl]="Implementer_FullName"></validation-messages>
+                            </div>
+                            <div class="col-6">
+                                <label for="Implementer_Website">{{ l('Website') }}</label>
+                                <input
+                                    type="text"
+                                    #Implementer_Website="ngModel"
+                                    id="Implementer_Website"
+                                    class="form-control"
+                                    [(ngModel)]="implementer.website"
+                                    name="Website"
+                                    minlength="1"
+                                    maxlength="300"
+                                />
+                                <validation-messages [formCtrl]="Implementer_Website"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Implementer_Address">{{ l('Address') }} *</label>
+                        <textarea
+                            type="text"
+                            #Implementer_Address="ngModel"
+                            id="Implementer_Address"
+                            class="form-control"
+                            [(ngModel)]="implementer.address"
+                            name="Address"
+                            minlength="1"
+                            maxlength="300"
+                            required
+                        ></textarea>
+                        <validation-messages [formCtrl]="Implementer_Address"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!implementerForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #followupRoundForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="followupRound.id">{{ l('EditFollowupRound') }}</span>
+                        <span *ngIf="!followupRound.id">{{ l('CreateNewFollowupRound') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="FollowupRound_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #FollowupRound_NameEnglish="ngModel"
+                            id="FollowupRound_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="followupRound.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FollowupRound_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FollowupRound_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #FollowupRound_NameDari="ngModel"
+                            id="FollowupRound_NameDari"
+                            class="form-control"
+                            [(ngModel)]="followupRound.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FollowupRound_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FollowupRound_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #FollowupRound_NamePashto="ngModel"
+                            id="FollowupRound_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="followupRound.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FollowupRound_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!followupRoundForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #positionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="position.id">{{ l('EditPosition') }}</span>
+                        <span *ngIf="!position.id">{{ l('CreateNewPosition') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Position_NameEnglish">{{ l('NameEnglish') }} *</label>
+                        <input
+                            type="text"
+                            #Position_NameEnglish="ngModel"
+                            id="Position_NameEnglish"
+                            class="form-control"
+                            [(ngModel)]="position.nameEnglish"
+                            name="NameEnglish"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Position_NameEnglish"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Position_NameDari">{{ l('NameDari') }} *</label>
+                        <input
+                            type="text"
+                            #Position_NameDari="ngModel"
+                            id="Position_NameDari"
+                            class="form-control"
+                            [(ngModel)]="position.nameDari"
+                            name="NameDari"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Position_NameDari"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Position_NamePashto">{{ l('NamePashto') }} *</label>
+                        <input
+                            type="text"
+                            #Position_NamePashto="ngModel"
+                            id="Position_NamePashto"
+                            class="form-control"
+                            [(ngModel)]="position.namePashto"
+                            name="NamePashto"
+                            minlength="1"
+                            maxlength="100"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Position_NamePashto"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!positionForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

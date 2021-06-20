@@ -1,0 +1,106 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #followupVisitForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="followupVisit.id">{{ l('EditFollowupVisit') }}</span>
+                        <span *ngIf="!followupVisit.id">{{ l('CreateNewFollowupVisit') }}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="FollowupRoundNameEnglish">{{ l('FollowupRound') }}</label>
+                                <select
+                                    name="followupVisit.followupRoundId"
+                                    [(ngModel)]="followupVisit.followupRoundId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectAFollowupRound') }}</option>
+                                    <option *ngFor="let item of allFollowupRounds" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="ImplementerFullName">{{ l('Implementer') }}</label>
+                                <select
+                                    name="followupVisit.implementerId"
+                                    [(ngModel)]="followupVisit.implementerId"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">{{ l('SelectAImplementer') }}</option>
+                                    <option *ngFor="let item of allImplementers" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FollowupVisit_FollowDate">{{ l('FollowDate') }}</label>
+                        <input
+                            required
+                            class="form-control m-input"
+                            #FollowupVisit_FollowDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="followupVisit.followDate"
+                            id="FollowupVisit_FollowDate"
+                            name="FollowupVisit_FollowDate"
+                        />
+                        <validation-messages [formCtrl]="FollowupVisit_FollowDate"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FollowupVisit_AssessorNames">{{ l('AssessorNames') }} *</label>
+                        <input
+                            type="text"
+                            #FollowupVisit_AssessorNames="ngModel"
+                            id="FollowupVisit_AssessorNames"
+                            class="form-control"
+                            [(ngModel)]="followupVisit.assessorNames"
+                            name="AssessorNames"
+                            minlength="1"
+                            maxlength="300"
+                            required
+                        />
+                        <validation-messages [formCtrl]="FollowupVisit_AssessorNames"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-outline-info"
+                        [disabled]="!followupVisitForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i> <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
